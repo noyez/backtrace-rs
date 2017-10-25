@@ -45,6 +45,7 @@ fn main() {
     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
     let target = env::var("TARGET").unwrap();
     let host = env::var("HOST").unwrap();
+    let build = env::var("BUILD").unwrap();
 
     // libbacktrace doesn't currently support Mach-O files
     if target.contains("darwin") {
@@ -111,11 +112,12 @@ fn main() {
        .arg("--disable-multilib")
        .arg("--disable-shared")
        .arg("--disable-host-shared")
-       .arg(format!("--host={}", target));
+       .arg(format!("--target={}", target));
+       .arg(format!("--host={}", host));
 
     // Apparently passing this flag causes problems on Windows
     if !host.contains("windows") {
-       cmd.arg(format!("--build={}", host));
+       cmd.arg(format!("--build={}", build));
     }
 
     run(&mut cmd, "sh");
