@@ -112,7 +112,7 @@ fn main() {
        .arg("--disable-multilib")
        .arg("--disable-shared")
        .arg("--disable-host-shared")
-       .arg(format!("--target={}", target));
+       .arg(format!("--target={}", target))
        .arg(format!("--host={}", host));
 
     // Apparently passing this flag causes problems on Windows
